@@ -14,6 +14,7 @@ import {
 } from './modules/singingbowl.js'
 import { createTimer, formatTime } from './modules/timer.js'
 import { createBreathingGuide } from './modules/breathing.js'
+import { bindSwipeBackHome } from './modules/swipe-back.js'
 
 const NO_TRACK = 'none'
 const prefs = loadPreferences()
@@ -38,6 +39,7 @@ let breathing = null
 let selectedDuration = 10
 let selectedTrackId = NO_TRACK
 let lastScreen = null
+let swipeCleanup = null
 
 const app = document.querySelector('#app')
 
@@ -168,11 +170,30 @@ function bindFavoriteButtons(container) {
 
 function goHome() {
   closeGoalCelebrationModal()
+  if (state.screen === 'session') {
+    stopSession()
+  }
   state.theme = null
   state.track = null
   state.screen = 'home'
   applyAppSurface()
   render()
+}
+
+function handleSwipeBackHome() {
+  goHome()
+}
+
+function bindSwipeNavigation() {
+  swipeCleanup?.()
+  swipeCleanup = null
+
+  if (state.screen !== 'setup' && state.screen !== 'session') return
+
+  const screen = app.querySelector('.screen')
+  if (!screen) return
+
+  swipeCleanup = bindSwipeBackHome(screen, handleSwipeBackHome)
 }
 
 function goMyPage() {
@@ -237,6 +258,7 @@ function render() {
   }
 
   lastScreen = state.screen
+  bindSwipeNavigation()
 }
 
 function renderHome() {

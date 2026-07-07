@@ -27,15 +27,15 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --app-max-width: 480px;
-  --text-hero: clamp(28px, 6vw + 10px, 36px);
-  --text-title: clamp(24px, 4.8vw + 8px, 32px);
-  --text-heading: clamp(20px, 3.5vw + 8px, 28px);
-  --text-body: clamp(14px, 1.8vw + 10px, 16px);
-  --text-small: clamp(11px, 1.2vw + 8px, 13px);
-  --text-tiny: clamp(10px, 1vw + 7px, 12px);
-  --text-stat: clamp(20px, 4vw + 8px, 26px);
-  --text-timer: clamp(44px, 11vw + 8px, 68px);
-  --text-emoji: clamp(28px, 6vw + 8px, 36px);
+  --text-hero: clamp(32px, 7vw + 14px, 40px);
+  --text-title: clamp(28px, 5.5vw + 12px, 34px);
+  --text-heading: clamp(22px, 4vw + 12px, 30px);
+  --text-body: clamp(16px, 2.4vw + 12px, 18px);
+  --text-small: clamp(14px, 1.8vw + 10px, 16px);
+  --text-tiny: clamp(12px, 1.4vw + 9px, 14px);
+  --text-stat: clamp(24px, 4.5vw + 12px, 30px);
+  --text-timer: clamp(52px, 12vw + 12px, 72px);
+  --text-emoji: clamp(32px, 7vw + 10px, 40px);
   --space-xs: clamp(6px, 1.5vw, 8px);
   --space-sm: clamp(10px, 2.5vw, 14px);
   --space-md: clamp(14px, 3.5vw, 20px);
@@ -50,6 +50,12 @@
   --radius-xs: clamp(8px, 2.2vw, 10px);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
@@ -102,17 +108,20 @@ button:focus-visible,
   margin-inline: auto;
   display: flex;
   flex-direction: column;
+  font-size: var(--text-body);
 }
 
 .app-shell.has-bottom-nav .screen {
-  padding-bottom: var(--space-sm);
+  padding-bottom: calc(96px + var(--safe-bottom));
 }
 
 .bottom-nav {
-  position: sticky;
-  bottom: var(--space-xs);
-  margin: var(--space-xs) 0 calc(var(--space-xs) + var(--safe-bottom));
-  width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--space-sm) + var(--safe-bottom));
+  transform: translateX(-50%);
+  width: min(calc(var(--app-max-width) - 2 * var(--space-md)), calc(100vw - var(--safe-left) - var(--safe-right) - 2 * var(--space-md)));
+  margin: 0;
   display: flex;
   gap: var(--space-xs);
   padding: var(--space-xs);
@@ -120,7 +129,7 @@ button:focus-visible,
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-md);
-  z-index: 100;
+  z-index: 120;
   flex-shrink: 0;
 }
 
@@ -177,12 +186,12 @@ button:focus-visible,
 }
 
 .bottom-nav-icon {
-  font-size: clamp(16px, 4vw, 18px);
+  font-size: clamp(20px, 5vw, 22px);
   line-height: 1;
 }
 
 .bottom-nav-label {
-  font-size: var(--text-tiny);
+  font-size: var(--text-small);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -393,14 +402,14 @@ button:focus-visible,
 
 .weekly-chart-header h3 {
   margin: 0 0 4px;
-  font-size: 15px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
 }
 
 .weekly-chart-caption {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--text-small);
   color: var(--text-dim);
 }
 
@@ -422,7 +431,7 @@ button:focus-visible,
 }
 
 .weekly-chart-total-label {
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
 }
@@ -449,7 +458,7 @@ button:focus-visible,
 }
 
 .weekly-goal-label {
-  font-size: 13px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
 }
@@ -492,13 +501,13 @@ button:focus-visible,
 .weekly-goal-value {
   min-width: 72px;
   text-align: center;
-  font-size: 13px;
+  font-size: var(--text-body);
   color: var(--text-muted);
 }
 
 .weekly-goal-value strong {
   color: var(--text);
-  font-size: 18px;
+  font-size: var(--text-heading);
 }
 
 .weekly-goal-track {
@@ -520,7 +529,7 @@ button:focus-visible,
 
 .weekly-goal-status {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--text-body);
   color: var(--text-muted);
 }
 
@@ -550,7 +559,7 @@ button:focus-visible,
 
 .weekly-bar-value {
   min-height: 16px;
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 700;
   color: var(--text);
 }
@@ -593,14 +602,14 @@ button:focus-visible,
 }
 
 .weekly-bar-label {
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
 }
 
 .weekly-bar-minutes {
   margin-top: -4px;
-  font-size: 10px;
+  font-size: var(--text-tiny);
   color: var(--text-dim);
 }
 
@@ -741,15 +750,15 @@ button:focus-visible,
 
 .track-number {
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   background: var(--surface-raised);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-muted);
 }
@@ -768,13 +777,13 @@ button:focus-visible,
 }
 
 .track-name {
-  font-size: 14px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
 }
 
 .track-sub {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--text-dim);
   white-space: nowrap;
   overflow: hidden;
@@ -875,13 +884,13 @@ button:focus-visible,
 }
 
 .mylist-entry-title {
-  font-size: 15px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
 }
 
 .mylist-entry-sub {
-  font-size: 12px;
+  font-size: var(--text-small);
   color: var(--text-dim);
 }
 
@@ -912,13 +921,13 @@ button:focus-visible,
 }
 
 .mylist-empty span {
-  font-size: 13px;
+  font-size: var(--text-body);
   line-height: 1.5;
   color: var(--text-dim);
 }
 
 .mylist-section h3 {
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
   margin: 0 0 12px;
@@ -971,7 +980,7 @@ button:focus-visible,
 
 .mylist-track {
   display: block;
-  font-size: 14px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -982,7 +991,7 @@ button:focus-visible,
 .mylist-sub {
   display: block;
   margin-top: 2px;
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--text-dim);
   white-space: nowrap;
   overflow: hidden;
@@ -1007,7 +1016,7 @@ button:focus-visible,
   border-radius: 999px;
   background: var(--surface-raised);
   color: var(--text);
-  font-size: 13px;
+  font-size: var(--text-body);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -1053,7 +1062,7 @@ button:focus-visible,
 
 .session-theme {
   display: inline-block;
-  font-size: 13px;
+  font-size: var(--text-body);
   font-weight: 500;
   color: var(--text-dim);
   padding: 6px 12px;
@@ -1078,7 +1087,7 @@ button:focus-visible,
 
 .timer-label {
   margin-top: 10px;
-  font-size: 11px;
+  font-size: var(--text-small);
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1268,7 +1277,7 @@ button:focus-visible,
 }
 
 .track-meta .sound-caption {
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--text-dim);
   margin: 2px 0 0;
   white-space: nowrap;
@@ -1295,7 +1304,7 @@ button:focus-visible,
 
 .session-mix-title {
   margin: 0 0 14px;
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -1305,11 +1314,11 @@ button:focus-visible,
 
 .mix-row {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: minmax(88px, 34%) 1fr;
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: var(--text-body);
   color: var(--text);
 }
 
@@ -1331,7 +1340,7 @@ button:focus-visible,
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: var(--text-body);
   color: var(--text);
   cursor: pointer;
 }
@@ -1528,7 +1537,7 @@ button:focus-visible,
 }
 
 .setup-section h3 {
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
   margin: 0 0 12px;
@@ -1538,7 +1547,7 @@ button:focus-visible,
 
 .setup-hint {
   margin: -6px 0 12px;
-  font-size: 12px;
+  font-size: var(--text-small);
   color: var(--text-dim);
 }
 
@@ -1549,7 +1558,7 @@ button:focus-visible,
 .option-label {
   display: block;
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: var(--text-small);
   font-weight: 600;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -1758,7 +1767,7 @@ button:focus-visible,
 
 .volume-row-hint,
 .mix-row-hint {
-  font-size: 11px;
+  font-size: var(--text-small);
   font-weight: 500;
   color: var(--text-dim);
 }
@@ -1771,7 +1780,7 @@ button:focus-visible,
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
-  font-size: 11px;
+  font-size: var(--text-small);
   color: var(--text-dim);
 }
 
@@ -1884,6 +1893,29 @@ button:focus-visible,
   flex-direction: column;
   gap: 10px;
   width: 100%;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-body: 17px;
+    --text-small: 15px;
+    --text-tiny: 13px;
+    --text-hero: clamp(34px, 8vw + 14px, 42px);
+    --text-title: clamp(30px, 6vw + 12px, 36px);
+    --text-heading: clamp(24px, 4.5vw + 12px, 32px);
+    --text-stat: clamp(26px, 5vw + 12px, 32px);
+  }
+
+  .theme-desc,
+  .track-sub,
+  .mylist-sub,
+  .weekly-chart-caption {
+    line-height: 1.5;
+  }
+
+  .track-item {
+    padding: 14px 16px;
+  }
 }
 
 @media (max-width: 380px) {
