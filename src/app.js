@@ -40,8 +40,101 @@ let selectedDuration = 10
 let selectedTrackId = NO_TRACK
 let lastScreen = null
 let swipeCleanup = null
+let historyReady = false
+let handlingPopState = false
 
 const app = document.querySelector('#app')
+
+function getHistorySnapshot() {
+  return {
+    app: 'nature-meditation',
+    screen: state.screen,
+    themeId: state.theme?.id ?? null,
+  }
+}
+
+function initAppHistory() {
+  if (historyReady) return
+  history.replaceState(getHistorySnapshot(), '')
+  window.addEventListener('popstate', onPopState)
+  historyReady = true
+}
+
+function pushAppHistory() {
+  if (!historyReady || handlingPopState) return
+  history.pushState(getHistorySnapshot(), '')
+}
+
+function onPopState(event) {
+  const snap = event.state
+
+  handlingPopState = true
+  try {
+    if (!snap || snap.app !== 'nature-meditation') {
+      if (state.screen === 'session') {
+        applyNavigateToSetup()
+      } else if (state.screen === 'setup') {
+        applyNavigateToHome()
+      }
+      return
+    }
+
+    if (snap.screen === 'home') {
+      applyNavigateToHome()
+      return
+    }
+
+    if (snap.screen === 'setup') {
+      applyNavigateToSetup(snap.themeId)
+      return
+    }
+
+    if (snap.screen === 'mypage') {
+      closeGoalCelebrationModal()
+      if (state.screen === 'session') stopSession()
+      state.theme = null
+      state.track = null
+      state.screen = 'mypage'
+      applyAppSurface()
+      render()
+    }
+  } finally {
+    handlingPopState = false
+  }
+}
+
+function applyNavigateToSetup(themeId = state.theme?.id ?? null) {
+  closeGoalCelebrationModal()
+  if (state.screen === 'session') {
+    stopSession()
+  }
+  if (themeId) {
+    state.theme = themes.find((theme) => theme.id === themeId) ?? state.theme
+  }
+  state.screen = 'setup'
+  if (state.theme) {
+    applyAppSurface(state.theme)
+  }
+  render()
+}
+
+function applyNavigateToHome() {
+  closeGoalCelebrationModal()
+  if (state.screen === 'session') {
+    stopSession()
+  }
+  state.theme = null
+  state.track = null
+  state.screen = 'home'
+  applyAppSurface()
+  render()
+}
+
+function goBackOneScreen() {
+  if (state.screen === 'session' || state.screen === 'setup') {
+    history.back()
+  }
+}
 
 function persistPrefs() {
   savePreferences({
@@ -169,11 +262,7 @@ function bindFavoriteButtons(container) {
 }
 
 function goSetupFromSession() {
-  closeGoalCelebrationModal()
-  stopSession()
-  state.screen = 'setup'
-  app.style.removeProperty('--session-accent')
-  render()
+  goBackOneScreen()
 }
 
 function goHome() {
@@ -185,17 +274,14 @@ function goHome() {
   state.track = null
   state.screen = 'home'
   applyAppSurface()
+  if (historyReady) {
+    history.replaceState(getHistorySnapshot(), '')
+  }
   render()
 }
 
 function handleSwipeBack() {
-  if (state.screen === 'session') {
-    goSetupFromSession()
-    return
-  }
-  if (state.screen === 'setup') {
-    goHome()
-  }
+  goBackOneScreen()
 }
 
 function bindSwipeNavigation() {
@@ -204,10 +290,7 @@ function bindSwipeNavigation() {
 
   if (state.screen !== 'setup' && state.screen !== 'session') return
 
-  const screen = app.querySelector('.screen')
-  if (!screen) return
-
-  swipeCleanup = bindSwipeBackHome(screen, handleSwipeBack)
+  swipeCleanup = bindSwipeBackHome(document, handleSwipeBack)
 }
 
 function goMyPage() {
@@ -215,6 +298,7 @@ function goMyPage() {
   state.track = null
   state.screen = 'mypage'
   applyAppSurface()
+  pushAppHistory()
   render()
 }
 
@@ -310,6 +394,7 @@ function renderHome() {
       state.theme = themes.find((t) => t.id === btn.dataset.themeId)
       selectedTrackId = NO_TRACK
       state.screen = 'setup'
+      pushAppHistory()
       render()
     })
   })
@@ -543,6 +628,7 @@ function renderSession() {
     <div class="app-shell">
     <div class="screen session-screen">
       <header class="session-header">
+        <button class="session-back-btn" id="session-back-btn" type="button" aria-label="노래 선택으로 돌아가기">← 뒤로</button>
         <span class="session-theme">${theme.emoji} ${theme.name}</span>
       </header>
 
@@ -689,6 +775,8 @@ function renderSession() {
 
   timer.start(totalSeconds)
 
+  app.querySelector('#session-back-btn')?.addEventListener('click', goSetupFromSession)
+
   app.querySelector('#pause-btn').addEventListener('click', () => {
     const visualizer = app.querySelector('#visualizer')
     if (timer.isPaused()) {
@@ -728,6 +816,7 @@ function startSession(trackId = NO_TRACK) {
     state.track = getTrackById(trackId) ?? getTracksForTheme(state.theme.id).find((t) => t.id === trackId) ?? null
   }
   state.screen = 'session'
+  pushAppHistory()
   render()
 }
 
@@ -757,4 +846,5 @@ if ('Notification' in window && Notification.permission === 'default') {
   Notification.requestPermission()
 }
 
+initAppHistory()
 render()

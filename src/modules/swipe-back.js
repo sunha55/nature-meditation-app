@@ -1,19 +1,19 @@
-const EDGE_PX = 40
-const EDGE_RATIO = 0.22
-const MIN_SWIPE_PX = 72
-const MAX_VERTICAL_RATIO = 0.55
+const EDGE_RATIO = 0.55
+const MIN_SWIPE_PX = 48
+const MAX_VERTICAL_RATIO = 0.8
 
-export function bindSwipeBackHome(element, onSwipeHome) {
-  if (!element || typeof onSwipeHome !== 'function') {
+export function bindSwipeBackHome(element, onSwipeBack) {
+  if (typeof onSwipeBack !== 'function') {
     return () => {}
   }
 
+  const target = element ?? document
   let startX = 0
   let startY = 0
   let tracking = false
 
   function canStartFrom(x) {
-    return x <= EDGE_PX || x <= window.innerWidth * EDGE_RATIO
+    return x <= window.innerWidth * EDGE_RATIO
   }
 
   function onTouchStart(event) {
@@ -35,20 +35,20 @@ export function bindSwipeBackHome(element, onSwipeHome) {
     if (deltaX < MIN_SWIPE_PX) return
     if (Math.abs(deltaY) > Math.abs(deltaX) * MAX_VERTICAL_RATIO) return
 
-    onSwipeHome()
+    onSwipeBack()
   }
 
   function onTouchCancel() {
     tracking = false
   }
 
-  element.addEventListener('touchstart', onTouchStart, { passive: true })
-  element.addEventListener('touchend', onTouchEnd, { passive: true })
-  element.addEventListener('touchcancel', onTouchCancel, { passive: true })
+  target.addEventListener('touchstart', onTouchStart, { passive: true })
+  target.addEventListener('touchend', onTouchEnd, { passive: true })
+  target.addEventListener('touchcancel', onTouchCancel, { passive: true })
 
   return () => {
-    element.removeEventListener('touchstart', onTouchStart)
-    element.removeEventListener('touchend', onTouchEnd)
-    element.removeEventListener('touchcancel', onTouchCancel)
+    target.removeEventListener('touchstart', onTouchStart)
+    target.removeEventListener('touchend', onTouchEnd)
+    target.removeEventListener('touchcancel', onTouchCancel)
   }
 }
