@@ -27,27 +27,27 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --app-max-width: 480px;
-  /* 일반 모바일 앱 기준 (iOS 17pt / Material 16sp) — px 고정 */
-  --text-hero: 34px;
-  --text-title: 28px;
-  --text-heading: 22px;
-  --text-body: 18px;
-  --text-small: 16px;
-  --text-tiny: 15px;
-  --text-stat: 26px;
-  --text-timer: 64px;
-  --text-emoji: 36px;
-  --text-button: 18px;
+  /* Android Material 3 기본 (sp → px) */
+  --text-hero: 28px;       /* Headline Medium */
+  --text-title: 22px;      /* Title Large */
+  --text-heading: 16px;    /* Title Medium */
+  --text-body: 16px;       /* Body Large */
+  --text-small: 14px;      /* Body Medium */
+  --text-tiny: 12px;       /* Body Small */
+  --text-stat: 22px;       /* Title Large */
+  --text-timer: 48px;      /* Display Medium (타이머) */
+  --text-emoji: 24px;      /* Icon 24dp */
+  --text-button: 14px;     /* Label Large (버튼) */
   --space-xs: 8px;
   --space-sm: 12px;
   --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --icon-sm: 64px;
-  --icon-md: 72px;
-  --icon-lg: 80px;
-  --icon-nav: 30px;
-  --gap-grid: 14px;
+  --space-lg: 20px;
+  --space-xl: 28px;
+  --icon-sm: 48px;         /* 터치 영역 48dp */
+  --icon-md: 56px;
+  --icon-lg: 64px;
+  --icon-nav: 24px;        /* Bottom nav icon 24dp */
+  --gap-grid: 12px;
   --radius: clamp(16px, 4vw, 20px);
   --radius-sm: clamp(10px, 2.8vw, 14px);
   --radius-xs: clamp(8px, 2.2vw, 10px);
@@ -125,7 +125,7 @@ button:focus-visible,
 }
 
 .app-shell.has-bottom-nav .screen {
-  padding-bottom: calc(96px + var(--safe-bottom));
+  padding-bottom: calc(80px + var(--safe-bottom));
 }
 
 .bottom-nav {
@@ -152,9 +152,9 @@ button:focus-visible,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 68px;
-  padding: 12px 14px;
+  gap: 4px;
+  min-height: 56px;
+  padding: 8px 12px;
   border: none;
   border-radius: 14px;
   background: transparent;
@@ -299,10 +299,10 @@ button:focus-visible,
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
+  padding: var(--space-md);
   text-align: left;
   cursor: pointer;
-  min-height: 168px;
+  min-height: 140px;
   transition:
     background 0.16s ease,
     border-color 0.16s ease,
@@ -353,7 +353,7 @@ button:focus-visible,
   width: var(--icon-sm);
   height: var(--icon-sm);
   margin-bottom: var(--space-sm);
-  border-radius: 16px;
+  border-radius: 12px;
   font-size: var(--text-emoji);
   background: color-mix(in srgb, var(--card-accent, var(--accent)) 14%, var(--surface-raised));
   border: 1px solid color-mix(in srgb, var(--card-accent, var(--accent)) 22%, var(--border));
@@ -483,13 +483,13 @@ button:focus-visible,
 }
 
 .weekly-goal-btn {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   color: var(--text);
-  font-size: 22px;
+  font-size: 20px;
   font-family: inherit;
   cursor: pointer;
   transition:
@@ -816,12 +816,12 @@ button:focus-visible,
 
 .favorite-btn {
   flex-shrink: 0;
-  width: 52px;
+  width: 48px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text-dim);
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
   transition:
     background 0.16s ease,
@@ -1087,7 +1087,7 @@ button:focus-visible,
   font-size: var(--text-button);
   font-weight: 600;
   font-family: inherit;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -1413,7 +1413,7 @@ button:focus-visible,
 }
 
 .control-btn {
-  padding: 14px 28px;
+  padding: 12px 24px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -1845,7 +1845,7 @@ button:focus-visible,
 
 .primary-btn {
   width: 100%;
-  padding: 18px;
+  padding: 16px;
   background: var(--text);
   border: none;
   border-radius: var(--radius-sm);
