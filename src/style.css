@@ -27,15 +27,15 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --app-max-width: 480px;
-  --text-hero: clamp(32px, 7vw + 14px, 40px);
-  --text-title: clamp(28px, 5.5vw + 12px, 34px);
-  --text-heading: clamp(22px, 4vw + 12px, 30px);
-  --text-body: clamp(16px, 2.4vw + 12px, 18px);
-  --text-small: clamp(14px, 1.8vw + 10px, 16px);
-  --text-tiny: clamp(12px, 1.4vw + 9px, 14px);
-  --text-stat: clamp(24px, 4.5vw + 12px, 30px);
-  --text-timer: clamp(52px, 12vw + 12px, 72px);
-  --text-emoji: clamp(32px, 7vw + 10px, 40px);
+  --text-hero: clamp(34px, 8vw + 16px, 42px);
+  --text-title: clamp(30px, 6vw + 14px, 38px);
+  --text-heading: clamp(24px, 4.8vw + 14px, 32px);
+  --text-body: clamp(17px, 2.8vw + 14px, 19px);
+  --text-small: clamp(15px, 2.2vw + 12px, 17px);
+  --text-tiny: clamp(14px, 1.6vw + 11px, 15px);
+  --text-stat: clamp(26px, 5vw + 14px, 32px);
+  --text-timer: clamp(56px, 13vw + 14px, 76px);
+  --text-emoji: clamp(36px, 8vw + 12px, 44px);
   --space-xs: clamp(6px, 1.5vw, 8px);
   --space-sm: clamp(10px, 2.5vw, 14px);
   --space-md: clamp(14px, 3.5vw, 20px);
@@ -56,6 +56,12 @@ html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 106.25%;
+  }
 }
 
 html,
@@ -424,7 +430,7 @@ button:focus-visible,
 }
 
 .weekly-chart-total {
-  font-size: 22px;
+  font-size: var(--text-stat);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--text);
@@ -646,13 +652,13 @@ button:focus-visible,
 
 .mode-icon {
   display: block;
-  font-size: 32px;
+  font-size: var(--text-emoji);
   margin-bottom: 10px;
 }
 
 .mode-name {
   display: block;
-  font-size: 16px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
   margin-bottom: 8px;
@@ -660,7 +666,7 @@ button:focus-visible,
 
 .mode-desc {
   display: block;
-  font-size: 12px;
+  font-size: var(--text-small);
   color: var(--text-dim);
   line-height: 1.45;
 }
@@ -674,13 +680,13 @@ button:focus-visible,
 }
 
 .themes-screen .setup-header h2 {
-  font-size: 24px;
+  font-size: var(--text-heading);
   color: var(--text);
   margin: 0 0 8px;
 }
 
 .themes-screen .setup-header p {
-  font-size: 14px;
+  font-size: var(--text-small);
   color: var(--text-dim);
   margin: 0;
 }
@@ -915,7 +921,7 @@ button:focus-visible,
 
 .mylist-empty p {
   margin: 0 0 10px;
-  font-size: 16px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
 }
@@ -1180,7 +1186,7 @@ button:focus-visible,
 }
 
 .breathing-label {
-  font-size: 15px;
+  font-size: var(--text-body);
   color: var(--text);
   font-weight: 500;
 }
@@ -1270,7 +1276,7 @@ button:focus-visible,
 }
 
 .track-title {
-  font-size: 14px;
+  font-size: var(--text-body);
   font-weight: 600;
   color: var(--text);
   margin: 0;
@@ -1378,7 +1384,7 @@ button:focus-visible,
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--text);
-  font-size: 14px;
+  font-size: var(--text-body);
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
@@ -1457,7 +1463,7 @@ button:focus-visible,
 }
 
 .complete-track {
-  font-size: 14px;
+  font-size: var(--text-body);
   color: var(--session-accent, var(--accent));
   margin: -20px 0 28px;
 }
@@ -1480,14 +1486,14 @@ button:focus-visible,
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: var(--radius-sm);
-  font-size: 15px;
+  font-size: var(--text-body);
   font-family: inherit;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
 }
 
 .home-btn-icon {
-  font-size: 16px;
+  font-size: var(--text-body);
   line-height: 1;
 }
 
@@ -1687,7 +1693,7 @@ button:focus-visible,
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   margin-bottom: 10px;
-  font-size: 15px;
+  font-size: var(--text-body);
   color: var(--text);
   cursor: pointer;
   transition:
@@ -1810,7 +1816,7 @@ button:focus-visible,
   border: none;
   border-radius: var(--radius-sm);
   color: var(--bg);
-  font-size: 16px;
+  font-size: var(--text-body);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -1842,7 +1848,7 @@ button:focus-visible,
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: var(--text-body);
   font-family: inherit;
   cursor: pointer;
   transition:
@@ -1871,14 +1877,14 @@ button:focus-visible,
 /* ── Complete ── */
 
 .complete-screen h2 {
-  font-size: 28px;
+  font-size: var(--text-title);
   font-weight: 700;
   color: var(--text);
   margin: 0 0 8px;
 }
 
 .complete-message {
-  font-size: 16px;
+  font-size: var(--text-body);
   color: var(--text-dim);
   margin: 0 0 32px;
 }
@@ -1899,11 +1905,12 @@ button:focus-visible,
   :root {
     --text-body: 17px;
     --text-small: 15px;
-    --text-tiny: 13px;
-    --text-hero: clamp(34px, 8vw + 14px, 42px);
-    --text-title: clamp(30px, 6vw + 12px, 36px);
-    --text-heading: clamp(24px, 4.5vw + 12px, 32px);
-    --text-stat: clamp(26px, 5vw + 12px, 32px);
+    --text-tiny: 14px;
+    --text-hero: clamp(36px, 8.5vw + 14px, 44px);
+    --text-title: clamp(32px, 6.5vw + 12px, 38px);
+    --text-heading: clamp(26px, 5vw + 12px, 34px);
+    --text-stat: clamp(28px, 5.5vw + 12px, 34px);
+    --text-timer: clamp(60px, 14vw + 12px, 80px);
   }
 
   .theme-desc,
@@ -2007,13 +2014,13 @@ button:focus-visible,
 }
 
 .celebration-icon {
-  font-size: 34px;
+  font-size: var(--text-emoji);
   margin-bottom: 10px;
 }
 
 .celebration-dialog h3 {
   margin: 0 0 10px;
-  font-size: 20px;
+  font-size: var(--text-heading);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--text);
@@ -2021,7 +2028,7 @@ button:focus-visible,
 
 .celebration-message {
   margin: 0 0 18px;
-  font-size: 14px;
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--text-muted);
 }
@@ -2033,7 +2040,7 @@ button:focus-visible,
   border-radius: var(--radius-xs);
   background: var(--text);
   color: var(--bg);
-  font-size: 14px;
+  font-size: var(--text-body);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;

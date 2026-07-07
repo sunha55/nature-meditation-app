@@ -168,6 +168,14 @@ function bindFavoriteButtons(container) {
   })
 }
 
+function goSetupFromSession() {
+  closeGoalCelebrationModal()
+  stopSession()
+  state.screen = 'setup'
+  app.style.removeProperty('--session-accent')
+  render()
+}
+
 function goHome() {
   closeGoalCelebrationModal()
   if (state.screen === 'session') {
@@ -180,8 +188,14 @@ function goHome() {
   render()
 }
 
-function handleSwipeBackHome() {
-  goHome()
+function handleSwipeBack() {
+  if (state.screen === 'session') {
+    goSetupFromSession()
+    return
+  }
+  if (state.screen === 'setup') {
+    goHome()
+  }
 }
 
 function bindSwipeNavigation() {
@@ -193,7 +207,7 @@ function bindSwipeNavigation() {
   const screen = app.querySelector('.screen')
   if (!screen) return
 
-  swipeCleanup = bindSwipeBackHome(screen, handleSwipeBackHome)
+  swipeCleanup = bindSwipeBackHome(screen, handleSwipeBack)
 }
 
 function goMyPage() {
