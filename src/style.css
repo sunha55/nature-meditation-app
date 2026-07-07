@@ -27,25 +27,27 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --app-max-width: 480px;
-  /* Mobile-first: 고정 크기 (일반 앱 본문 17~18px 기준) */
-  --text-hero: 2.125rem;
-  --text-title: 1.75rem;
-  --text-heading: 1.375rem;
-  --text-body: 1rem;
-  --text-small: 0.9375rem;
-  --text-tiny: 0.875rem;
-  --text-stat: 1.625rem;
-  --text-timer: 3.5rem;
-  --text-emoji: 2.25rem;
+  /* 일반 모바일 앱 기준 (iOS 17pt / Material 16sp) — px 고정 */
+  --text-hero: 34px;
+  --text-title: 28px;
+  --text-heading: 22px;
+  --text-body: 18px;
+  --text-small: 16px;
+  --text-tiny: 15px;
+  --text-stat: 26px;
+  --text-timer: 64px;
+  --text-emoji: 36px;
+  --text-button: 18px;
   --space-xs: 8px;
   --space-sm: 12px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-  --icon-sm: 52px;
-  --icon-md: 56px;
-  --icon-lg: 72px;
-  --gap-grid: 12px;
+  --icon-sm: 64px;
+  --icon-md: 72px;
+  --icon-lg: 80px;
+  --icon-nav: 30px;
+  --gap-grid: 14px;
   --radius: clamp(16px, 4vw, 20px);
   --radius-sm: clamp(10px, 2.8vw, 14px);
   --radius-xs: clamp(8px, 2.2vw, 10px);
@@ -54,27 +56,8 @@
 }
 
 html {
-  font-size: 20px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-}
-
-@media (min-width: 769px) {
-  html {
-    font-size: 16px;
-  }
-
-  :root {
-    --text-hero: clamp(2rem, 4vw + 1rem, 2.625rem);
-    --text-title: clamp(1.625rem, 3vw + 0.75rem, 2.125rem);
-    --text-heading: clamp(1.25rem, 2.5vw + 0.75rem, 1.75rem);
-    --text-stat: clamp(1.5rem, 3vw + 0.75rem, 2rem);
-    --text-timer: clamp(3rem, 8vw + 1rem, 4.5rem);
-    --text-emoji: clamp(2rem, 4vw + 0.75rem, 2.75rem);
-    --icon-sm: clamp(44px, 6vw, 52px);
-    --icon-md: clamp(48px, 7vw, 56px);
-    --icon-lg: clamp(64px, 10vw, 76px);
-  }
 }
 
 html,
@@ -130,6 +113,17 @@ button:focus-visible,
   line-height: 1.5;
 }
 
+.app-shell button,
+.app-shell .bottom-nav-item,
+.app-shell .control-btn,
+.app-shell .primary-btn,
+.app-shell .secondary-btn,
+.app-shell .home-btn,
+.app-shell .duration-btn,
+.app-shell .track-item {
+  font-size: var(--text-button);
+}
+
 .app-shell.has-bottom-nav .screen {
   padding-bottom: calc(96px + var(--safe-bottom));
 }
@@ -158,9 +152,9 @@ button:focus-visible,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  min-height: 60px;
-  padding: 10px 12px;
+  gap: 6px;
+  min-height: 68px;
+  padding: 12px 14px;
   border: none;
   border-radius: 14px;
   background: transparent;
@@ -205,7 +199,7 @@ button:focus-visible,
 }
 
 .bottom-nav-icon {
-  font-size: 1.75rem;
+  font-size: var(--icon-nav);
   line-height: 1;
 }
 
@@ -305,10 +299,10 @@ button:focus-visible,
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: var(--space-md);
+  padding: 18px;
   text-align: left;
   cursor: pointer;
-  min-height: 148px;
+  min-height: 168px;
   transition:
     background 0.16s ease,
     border-color 0.16s ease,
@@ -359,8 +353,8 @@ button:focus-visible,
   width: var(--icon-sm);
   height: var(--icon-sm);
   margin-bottom: var(--space-sm);
-  border-radius: 14px;
-  font-size: 1.75rem;
+  border-radius: 16px;
+  font-size: var(--text-emoji);
   background: color-mix(in srgb, var(--card-accent, var(--accent)) 14%, var(--surface-raised));
   border: 1px solid color-mix(in srgb, var(--card-accent, var(--accent)) 22%, var(--border));
 }
@@ -371,7 +365,7 @@ button:focus-visible,
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .theme-desc {
@@ -489,13 +483,13 @@ button:focus-visible,
 }
 
 .weekly-goal-btn {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   color: var(--text);
-  font-size: 18px;
+  font-size: 22px;
   font-family: inherit;
   cursor: pointer;
   transition:
@@ -822,12 +816,12 @@ button:focus-visible,
 
 .favorite-btn {
   flex-shrink: 0;
-  width: 46px;
+  width: 52px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text-dim);
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
   transition:
     background 0.16s ease,
@@ -1090,10 +1084,10 @@ button:focus-visible,
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
-  font-size: var(--text-body);
+  font-size: var(--text-button);
   font-weight: 600;
   font-family: inherit;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -1419,12 +1413,12 @@ button:focus-visible,
 }
 
 .control-btn {
-  padding: 12px 26px;
+  padding: 14px 28px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--text);
-  font-size: var(--text-body);
+  font-size: var(--text-button);
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
@@ -1851,12 +1845,12 @@ button:focus-visible,
 
 .primary-btn {
   width: 100%;
-  padding: 16px;
+  padding: 18px;
   background: var(--text);
   border: none;
   border-radius: var(--radius-sm);
   color: var(--bg);
-  font-size: var(--text-body);
+  font-size: var(--text-button);
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -1942,88 +1936,11 @@ button:focus-visible,
 }
 
 @media (max-width: 768px) {
-  html {
-    font-size: 20px;
-  }
-
-  :root {
-    --text-hero: 2rem;
-    --text-title: 1.75rem;
-    --text-body: 1.0625rem;
-    --text-small: 1rem;
-    --text-tiny: 0.9375rem;
-    --icon-sm: 60px;
-    --icon-md: 64px;
-  }
-
-  .hero-header h1 {
-    font-size: 40px;
-    line-height: 1.18;
-  }
-
-  .subtitle {
-    font-size: 19px;
-    max-width: none;
-    color: var(--text-muted);
-  }
-
-  .eyebrow {
-    font-size: 15px;
-  }
-
-  .theme-name {
-    font-size: 20px;
-  }
-
   .theme-desc,
   .track-sub,
   .mylist-sub,
   .weekly-chart-caption {
-    font-size: 17px;
     line-height: 1.55;
-    color: var(--text-muted);
-  }
-
-  .theme-icon-wrap {
-    width: 60px;
-    height: 60px;
-    font-size: 34px;
-  }
-
-  .theme-card {
-    min-height: 160px;
-    padding: 18px;
-  }
-
-  .bottom-nav-icon {
-    font-size: 32px;
-  }
-
-  .bottom-nav-label {
-    font-size: 16px;
-  }
-
-  .bottom-nav-item {
-    min-height: 64px;
-  }
-
-  .track-name,
-  .track-title {
-    font-size: 19px;
-  }
-
-  .session-back-btn {
-    font-size: 18px;
-    padding: 12px 16px;
-  }
-
-  .session-theme {
-    font-size: 17px;
-  }
-
-  .control-btn {
-    font-size: 18px;
-    padding: 14px 28px;
   }
 
   .track-item {
