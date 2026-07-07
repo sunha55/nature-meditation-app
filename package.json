@@ -1,0 +1,32 @@
+{
+  "name": "nature-meditation-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "icons": "node scripts/generate-icons.mjs",
+    "prebuild": "npm run icons",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cap:assets": "npm run icons && npx @capacitor/assets generate --iconBackgroundColor \"#09090b\" --iconBackgroundColorDark \"#09090b\" --splashBackgroundColor \"#09090b\" --splashBackgroundColorDark \"#09090b\"",
+    "cap:sync": "npm run build && npx cap sync",
+    "cap:android": "npm run cap:sync && npx cap open android",
+    "cap:ios": "npm run cap:sync && npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.2.0",
+    "@capacitor/app": "^7.0.1",
+    "@capacitor/core": "^7.2.0",
+    "@capacitor/ios": "^7.2.0",
+    "@capacitor/splash-screen": "^7.0.1",
+    "@capacitor/status-bar": "^7.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.2.0",
+    "sharp": "^0.34.2",
+    "vite": "^8.1.1",
+    "vite-plugin-pwa": "^1.0.1"
+  }
+}
